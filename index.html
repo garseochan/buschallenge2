@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#101820" />
+  <title>플래닛 버스 노선 챌린지</title>
+  <meta name="description" content="노선을 외우고 30초 안에 8개 정류장을 맞히는 플래닛 버스 노선 챌린지" />
+  <link rel="stylesheet" href="./styles.css?v=130" />
+</head>
+<body data-screen="course">
+  <main class="app-shell">
+    <section id="screen-course" class="screen course-screen active" aria-labelledby="course-title">
+      <header class="course-header">
+        <div><span class="eyebrow">PLANET BUS CHALLENGE</span><h1 id="course-title">오늘의 버스 노선</h1></div>
+        <span class="time-badge">30 SEC</span>
+      </header>
+
+      <div id="route-tabs" class="route-tabs" aria-label="노선 선택"></div>
+
+      <section class="route-card">
+        <div class="route-card-head">
+          <div><small id="route-type">직행좌석</small><strong id="route-number">9007</strong></div>
+          <p><b id="route-origin">운중동먹거리촌</b><span>→</span><em>플래닛</em><span>→</span><b id="route-destination">서울역</b></p>
+        </div>
+        <div class="memory-tip"><b>먼저 외워보세요!</b><span>출발·플래닛·도착을 포함한 11개 정류장</span></div>
+        <div class="route-map-wrap"><div class="route-map-grid" aria-hidden="true"></div><svg id="route-map-line" class="route-map-line" viewBox="0 0 320 430" preserveAspectRatio="none" aria-hidden="true"></svg><ol id="route-stops" class="route-stops route-map-stops"></ol><span class="map-note">노선도 · 실제 지도 축척과 무관</span></div>
+      </section>
+
+      <section class="mission-card">
+        <div><span>MISSION</span><strong>30초 안에<br>8개 정류장 맞히기</strong></div>
+        <p>틀리면 버스가 멈추고 오답은 사라집니다.<br>30초 안에 종점까지 도착하면 <b>1P</b>!</p>
+      </section>
+
+      <p id="main-chance" class="chance-pill">게임 기회 확인 중</p>
+      <button id="start-button" class="primary-button" type="button" disabled>버스 출발 <span>→</span></button>
+    </section>
+
+    <section id="screen-game" class="screen game-screen" aria-labelledby="game-title">
+      <header class="game-hud">
+        <button id="quit-button" class="hud-button" type="button" aria-label="노선 선택으로 돌아가기">×</button>
+        <div class="bus-chip"><b id="game-bus-number">9007</b><span id="game-title">서울역행</span></div>
+        <div class="progress-chip"><span id="game-progress">1 / 8</span><strong id="stopwatch">30.0</strong></div>
+      </header>
+
+      <section id="driver-view" class="driver-view driving" aria-label="버스 운전석 주행 화면">
+        <div class="motion-layer" aria-hidden="true"><i></i><i></i><i></i></div>
+
+        <div id="planet-pass" class="planet-pass" aria-live="polite"><span>THE PLANET</span><b>SK플래닛</b></div>
+
+        <div id="checkpoint" class="checkpoint" aria-hidden="true">
+          <div class="checkpoint-banner"><span class="banner-edge left">NEXT</span><small>NEXT STOP</small><strong id="flag-name">?</strong><span class="banner-edge right">STOP</span></div>
+        </div>
+
+        <div class="steering-motion" aria-hidden="true"></div>
+
+        <div id="drive-message" class="drive-message"><small>NEXT STOP</small><strong id="drive-status">출발합니다</strong></div>
+
+        <div id="warning" class="warning-panel" role="alert"><small>WRONG STOP</small><strong>꽝!</strong><span>다시 골라주세요</span></div>
+
+        <div id="choice-panel" class="dashboard-choices is-hidden">
+          <div class="dashboard-label"><span>이 정류장 이름은?</span><b id="choice-remaining">3개 선택 가능</b></div>
+          <div id="choices" class="choices" aria-label="정류장 선택지"></div>
+        </div>
+      </section>
+    </section>
+
+    <section id="screen-result" class="screen result-screen" aria-labelledby="result-title">
+      <div id="clover-rain" class="clover-rain" aria-hidden="true"></div>
+      <span id="result-label" class="arrival-label">MISSION COMPLETE</span>
+      <div id="result-icon" class="result-icon">🚌</div>
+      <h2 id="result-title">서울역 도착!</h2>
+      <p id="result-message">30초 안에 8개 정류장을 모두 통과했어요.</p>
+      <section class="record-card">
+        <span>운행 기록</span><strong id="result-time">00.0<small>초</small></strong><p id="result-detail">정답 8개 · 오답 0회</p>
+      </section>
+      <button id="claim-point-button" class="primary-button is-hidden" type="button">공유하고 1P 적립</button>
+      <button id="ad-replay-button" class="secondary-button" type="button">광고 보고 한 번 더</button>
+      <button id="course-button" class="text-button" type="button">다른 노선 선택</button>
+    </section>
+  </main>
+
+  <div id="ad-overlay" class="ad-overlay is-hidden" role="dialog" aria-modal="true" aria-label="광고">
+    <div class="ad-box"><small>ADVERTISEMENT</small><strong>광고</strong><p>시간 초과 · 광고 노출</p><span id="ad-count">2</span></div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    window.__OGOGBridgeMockConfig = {
+      bridgeVersion:"1.0.0",
+      allowFunctions:["login.check","login.request","participation.getState","execution.report","reward.claim","reward.getPointStatus","ui.toast"],
+      profile:{isLogin:true,channel:"WEB",baseRemainingCount:4,extraRemainingCount:0,playable:true,bestScore:0},
+      flowPolicy:{schemaVersion:"1.0",flows:[{flowId:"planet-bus-route-complete",actionType:"COMPLETE",benefits:[{benefitId:"planet-bus-route-point"}]}]},
+      benefitPolicies:[{benefitId:"planet-bus-route-point",benefitType:"POINT",conditionType:"RESULT_CODE",conditionJson:{resultCodes:["CLEAR_30SEC"]},benefitTitle:"버스 노선 챌린지 1P",benefitConfigJson:{rewardType:"webapp_challenge",amount:1,popupRequiredYn:"N",claimRequiredYn:"Y"}}]
+    };
+  </script>
+  <script src="https://dev.ogog.kr/resources/js/ogogbridge/ogogbridge-1.0.0.mock.js" data-ogog-bridge-mock="true"></script>
+  <script src="./app.js?v=130"></script>
+</body>
+</html>

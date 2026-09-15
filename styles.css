@@ -1,0 +1,424 @@
+@font-face{font-family:Pretendard;src:url('./fonts/PretendardVariable.woff2') format('woff2');font-weight:100 900;font-display:swap}
+:root{--ink:#111922;--navy:#101820;--navy2:#1b2630;--lime:#c8ff25;--green:#65a900;--red:#ff4f45;--paper:#f5f6f2;--muted:#6d757c;--line:#d8ddd7}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;min-height:100%;background:#dfe5e4;font-family:Pretendard,Arial,sans-serif;color:var(--ink);overscroll-behavior:none}body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}button{font:inherit;border:0;color:inherit;cursor:pointer;touch-action:manipulation}.app-shell{width:min(100%,640px);min-height:100dvh;margin:auto;background:var(--paper);position:relative;overflow:hidden;box-shadow:0 0 44px #0c16242a}.screen{display:none;min-height:100dvh}.screen.active{display:flex;flex-direction:column}.is-hidden{display:none!important}
+.course-screen{padding:calc(22px + env(safe-area-inset-top)) 18px calc(24px + env(safe-area-inset-bottom));background:radial-gradient(circle at 92% 0,#e8ffc0,transparent 23%),var(--paper)}.course-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.eyebrow{font-size:11px;letter-spacing:1.5px;font-weight:900;color:#579200}.course-header h1{font-size:32px;letter-spacing:-1.5px;margin:4px 0 0}.time-badge{background:var(--navy);color:var(--lime);border-radius:999px;padding:9px 11px;font-size:11px;font-weight:950;white-space:nowrap}
+.route-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:18px 0 12px}.route-tab{background:white;border:1px solid var(--line);border-radius:15px;padding:9px 5px;min-width:0}.route-tab b{display:block;font-size:15px}.route-tab span{display:block;margin-top:2px;font-size:8px;color:#7b8388;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.route-tab.active{background:var(--navy);border-color:var(--navy);color:white;box-shadow:0 5px 0 #05090d}.route-tab.active span{color:var(--lime)}
+.route-card{background:white;border:1px solid var(--line);border-radius:24px;padding:16px;box-shadow:0 10px 30px #15252e0c}.route-card-head{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid #edf0ec;padding-bottom:13px}.route-card-head>div{display:flex;align-items:baseline;gap:7px}.route-card-head small{font-size:9px;color:#778086;font-weight:800}.route-card-head strong{font-size:28px;letter-spacing:-1px}.route-card-head p{margin:0;text-align:right;font-size:10px;line-height:1.45}.route-card-head p span{padding:0 3px;color:#a0a7ab}.route-card-head p em{font-style:normal;color:#579200;font-weight:900}.memory-tip{display:flex;justify-content:space-between;align-items:center;margin:12px 0 9px;gap:8px}.memory-tip b{font-size:13px}.memory-tip span{font-size:9px;color:#7d858a;text-align:right}.route-stops{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:6px}.route-stops li{min-height:38px;border-radius:11px;background:#f3f5f1;display:grid;grid-template-columns:22px 1fr auto;align-items:center;gap:5px;padding:5px 7px;min-width:0}.route-stops i{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--navy);color:white;font-size:8px;font-style:normal;font-weight:900}.route-stops span{font-size:10px;font-weight:800;line-height:1.15;word-break:keep-all}.route-stops small{font-size:6px;color:#8a9195}.route-stops .terminal{background:#fff0ef}.route-stops .terminal i{background:var(--red)}.route-stops .planet{background:#efffc7}.route-stops .planet i{background:var(--green)}.route-stops .planet span{font-weight:950;color:#426f00}.route-stops .planet small{display:none}
+.mission-card{margin:12px 0;background:var(--navy);color:white;border-radius:20px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:15px}.mission-card>div span{display:block;color:var(--lime);font-size:9px;font-weight:900;letter-spacing:1.2px}.mission-card>div strong{display:block;font-size:18px;line-height:1.18;margin-top:3px}.mission-card p{margin:0;font-size:10px;color:#bcc5ca;line-height:1.55;text-align:right}.mission-card p b{color:var(--lime)}.chance-pill{text-align:center;font-size:11px;color:#6d7479;margin:2px 0 10px}.primary-button,.secondary-button{width:100%;min-height:60px;border-radius:19px;font-size:17px;font-weight:900}.primary-button{background:var(--navy);color:white;box-shadow:0 8px 0 #060b0f}.primary-button span{font-size:24px;color:var(--lime);margin-left:10px}.primary-button:disabled{opacity:.45}.secondary-button{background:white;border:1.5px solid var(--line);margin-top:11px}.text-button{align-self:center;background:transparent;padding:15px;color:#6f767b;text-decoration:underline;font-weight:750}
+.game-screen{background:var(--navy);color:white;height:100dvh;overflow:hidden}.game-hud{height:76px;padding:calc(9px + env(safe-area-inset-top)) 12px 9px;display:grid;grid-template-columns:44px 1fr auto;gap:8px;align-items:center;background:#0a1118;position:relative;z-index:20}.hud-button{width:40px;height:40px;border-radius:13px;background:#202c36;color:white;border:1px solid #3a4854;font-size:23px}.bus-chip{display:flex;align-items:center;gap:8px}.bus-chip b{background:var(--lime);color:var(--ink);border-radius:10px;padding:8px 7px;font-size:15px}.bus-chip span{font-size:12px;font-weight:800}.progress-chip{text-align:right}.progress-chip span{display:block;color:#98a4ad;font-size:9px}.progress-chip strong{font-size:23px;color:var(--lime);font-variant-numeric:tabular-nums}.progress-chip strong.danger{color:#ff695f;animation:pulse .45s ease infinite alternate}
+.driver-view{position:relative;flex:1;min-height:0;overflow:hidden;background:linear-gradient(#87c7ef 0 46%,#dce6df 46% 56%,#5c6467 56%);isolation:isolate}.sky{position:absolute;inset:0 0 44%;background:linear-gradient(#80c3ef,#d9eff9);z-index:0}.sky:after{content:'';position:absolute;width:90px;height:28px;border-radius:50%;background:#fff9;left:12%;top:18%;box-shadow:180px 30px 0 5px #fff8,330px -2px 0 -4px #fff7}
+.scenery{position:absolute;left:-25%;width:150%;z-index:1;animation-play-state:running}.scenery-back{bottom:42%;height:23%;background:repeating-linear-gradient(90deg,#9bb39c 0 32px,transparent 32px 45px,#81958b 45px 85px,transparent 85px 105px),linear-gradient(0deg,#7a8e84 0 35%,transparent 35%);opacity:.85;animation:sceneryBack 4s linear infinite}.scenery-front{bottom:37%;height:26%;background:repeating-linear-gradient(90deg,transparent 0 20px,#586b62 20px 29px,#5b9259 29px 55px,transparent 55px 82px,#8b7f70 82px 122px,#b3aa9c 122px 158px,transparent 158px 190px);clip-path:polygon(0 25%,100% 0,100% 100%,0 100%);animation:sceneryFront 1.8s linear infinite}.road{position:absolute;z-index:2;left:-18%;right:-18%;bottom:-5%;height:58%;background:#4e5558;clip-path:polygon(26% 0,74% 0,100% 100%,0 100%);overflow:hidden}.road:before{content:'';position:absolute;left:50%;top:0;width:5px;height:150%;background:repeating-linear-gradient(#fff 0 28px,transparent 28px 58px);transform:translateX(-50%) perspective(200px) rotateX(20deg);transform-origin:top;animation:roadMove .45s linear infinite}.road i{position:absolute;top:0;height:100%;width:4px;background:#e9e6c3aa}.road i:nth-child(1){left:30%;transform:rotate(11deg)}.road i:nth-child(2){right:30%;transform:rotate(-11deg)}.road i:nth-child(3){display:none}.driver-view.stopped .scenery,.driver-view.stopped .road:before{animation-play-state:paused}.driver-view.braking{animation:brake .18s ease 2}
+.windshield-frame{position:absolute;z-index:7;inset:0;pointer-events:none;border-left:18px solid #121a21;border-right:18px solid #121a21;box-shadow:inset 0 16px 0 #121a21}.windshield-frame:before{content:'';position:absolute;left:49%;top:0;width:8px;height:53%;background:#161e25;transform:skew(-2deg)}.dashboard{position:absolute;z-index:8;left:-8%;right:-8%;bottom:-12%;height:33%;border-radius:50% 50% 0 0;background:linear-gradient(#222d35,#0b1116 55%);box-shadow:0 -8px 25px #0008}.dashboard:before{content:'';position:absolute;left:26%;right:26%;top:19%;height:35%;border-radius:18px;background:#151e25;border:2px solid #39444c}.wheel{position:absolute;left:6%;bottom:14%;width:130px;height:130px;border:14px solid #0a0d10;border-radius:50%;box-shadow:inset 0 0 0 5px #333}.wheel:after{content:'';position:absolute;left:50%;top:50%;width:78px;height:24px;background:#111;transform:translate(-50%,-50%) rotate(-8deg);border-radius:12px}
+.drive-message{position:absolute;z-index:9;top:5%;left:50%;transform:translateX(-50%);min-width:190px;text-align:center;background:#07111dde;border:1px solid #ffffff42;border-radius:16px;padding:9px 14px;backdrop-filter:blur(8px)}.drive-message small{display:block;font-size:8px;letter-spacing:1.2px;color:var(--lime);font-weight:900}.drive-message strong{display:block;font-size:17px;margin-top:2px;white-space:nowrap}.planet-pass{position:absolute;z-index:6;right:-70%;top:28%;background:#1b2530;color:white;border-left:7px solid var(--lime);padding:13px 18px;border-radius:12px;opacity:0;transition:.42s cubic-bezier(.2,.8,.2,1);box-shadow:0 8px 22px #0005}.planet-pass span{display:block;color:var(--lime);font-size:9px;font-weight:900;letter-spacing:1px}.planet-pass b{font-size:17px}.planet-pass.show{right:8%;opacity:1}
+.bus-stop-flag{position:absolute;z-index:6;right:-135px;top:28%;width:105px;height:190px;display:flex;flex-direction:column;align-items:center;opacity:0;transition:right .33s cubic-bezier(.2,.8,.2,1),opacity .2s,transform .25s}.bus-stop-flag i{position:absolute;top:43px;bottom:0;width:7px;border-radius:99px;background:#59656d}.bus-stop-flag b{position:relative;z-index:1;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--lime);border:5px solid white;color:var(--navy);font-size:11px;box-shadow:0 5px 12px #0005}.bus-stop-flag span{position:relative;z-index:2;margin-top:8px;min-width:82px;text-align:center;background:white;color:var(--ink);padding:7px 8px;border-radius:8px;font-size:10px;font-weight:900;white-space:nowrap;box-shadow:0 4px 10px #0004}.bus-stop-flag.arrive{right:8%;opacity:1}.bus-stop-flag.named span{background:var(--lime);transform:scale(1.06)}.bus-stop-flag.leave{right:108%;opacity:0;transform:scale(1.25)}
+.dashboard-choices{position:absolute;z-index:12;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));background:#101923ed;border:1px solid #ffffff3d;border-radius:20px;padding:11px;box-shadow:0 10px 30px #0008;backdrop-filter:blur(9px)}.dashboard-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding:0 2px}.dashboard-label span{font-size:11px;color:#d8dde0}.dashboard-label b{font-size:9px;color:var(--lime)}.choices{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.choice-button{min-height:62px;border-radius:14px;background:#f8f9f7;color:var(--ink);display:flex;justify-content:center;align-items:center;padding:7px 5px;box-shadow:0 5px 0 #0006;transition:.16s}.choice-button span{font-size:12px;font-weight:900;line-height:1.12;word-break:keep-all}.choice-button.wrong{opacity:.18;filter:grayscale(1);transform:translateY(5px);box-shadow:none}.choice-button.correct{background:var(--lime);transform:translateY(-2px)}
+.warning-panel{position:absolute;z-index:15;left:50%;top:39%;transform:translate(-50%,-50%) scale(.8);opacity:0;width:205px;text-align:center;border:2px solid #ff8a82;border-radius:17px;padding:12px;background:#3d0707ed;box-shadow:0 0 38px #ff201b66;transition:.14s}.warning-panel small{display:block;color:#ffaaa4;font-size:8px;letter-spacing:2px}.warning-panel strong{display:block;color:white;font-size:33px;margin:1px}.warning-panel span{font-size:11px;color:#ffd3d0}.warning-panel.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.result-screen{align-items:center;text-align:center;padding:calc(30px + env(safe-area-inset-top)) 22px calc(25px + env(safe-area-inset-bottom));background:radial-gradient(circle at 50% 9%,#e9ffc0,transparent 31%),var(--paper);position:relative;overflow:hidden}.arrival-label{margin-top:10px;color:#5d9600;font-size:11px;font-weight:950;letter-spacing:1.5px}.arrival-label.fail{color:#d9483f}.result-icon{font-size:96px;line-height:1;margin:34px 0 12px}.result-screen h2{font-size:36px;letter-spacing:-1.4px;margin:6px 0}.result-screen>p{font-size:14px;line-height:1.55;color:#646c72;margin:0 0 20px}.result-screen>p b{color:#579200}.record-card{width:100%;background:var(--navy);color:white;border-radius:23px;padding:18px;margin-bottom:15px}.record-card>span{font-size:10px;color:#aeb8bf}.record-card strong{display:block;color:var(--lime);font-size:49px;line-height:1.06}.record-card small{font-size:15px;color:white;margin-left:4px}.record-card p{font-size:10px;color:#afb8be;margin:7px 0 0}.clover-rain{position:absolute;z-index:10;inset:0;overflow:hidden;pointer-events:none}.clover-rain img{position:absolute;top:-70px;animation:cloverFall 2.8s linear forwards}
+.ad-overlay{position:fixed;z-index:100;inset:0;background:#071018f2;display:grid;place-items:center;color:white}.ad-box{width:min(82vw,330px);height:310px;border-radius:26px;background:linear-gradient(150deg,#202c35,#0d141a);border:1px solid #ffffff30;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 20px 60px #0009}.ad-box small{font-size:9px;letter-spacing:2px;color:#8f9aa2}.ad-box strong{font-size:48px;margin:8px}.ad-box p{font-size:12px;color:#b9c1c6}.ad-box span{margin-top:18px;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:white;color:#111;font-weight:900}.toast{position:fixed;z-index:120;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translate(-50%,18px);opacity:0;white-space:nowrap;border-radius:999px;background:#0b141ce9;color:white;padding:11px 16px;font-size:11px;font-weight:800;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
+@keyframes sceneryBack{to{transform:translateX(-105px)}}@keyframes sceneryFront{to{transform:translateX(-190px)}}@keyframes roadMove{to{background-position:0 58px}}@keyframes brake{50%{transform:translateX(4px)}}@keyframes pulse{to{transform:scale(1.08)}}@keyframes cloverFall{to{transform:translateY(110dvh) rotate(500deg);opacity:.2}}
+@media(max-height:740px){.course-screen{padding-top:15px}.route-tabs{margin-top:12px}.route-card{padding:12px}.route-stops li{min-height:34px}.mission-card{padding:11px 13px}.primary-button{min-height:54px}.driver-view .drive-message{top:3%}.dashboard-choices{bottom:calc(7px + env(safe-area-inset-bottom));padding:9px}.choice-button{min-height:54px}.result-icon{font-size:80px;margin-top:20px}.record-card{padding:14px}.record-card strong{font-size:42px}}
+@media(min-width:641px){.game-screen{height:900px;min-height:900px;margin-top:24px;margin-bottom:24px;border-radius:28px}.driver-view{border-radius:0 0 28px 28px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* v31 route-map + race checkpoint */
+.route-map-wrap{position:relative;height:430px;margin-top:7px;border-radius:18px;overflow:hidden;background:#eef1e8;border:1px solid #d7ddd2;box-shadow:inset 0 0 30px #83998c16}.route-map-grid{position:absolute;inset:0;background:linear-gradient(25deg,transparent 47%,#fff 48% 51%,transparent 52%) 0 0/76px 62px,linear-gradient(155deg,transparent 47%,#dfe6dc 48% 51%,transparent 52%) 0 0/92px 74px,linear-gradient(90deg,#e3eadf 1px,transparent 1px) 0 0/52px 52px,linear-gradient(#e3eadf 1px,transparent 1px) 0 0/52px 52px;opacity:.8}.route-map-line{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.map-route-shadow{fill:none;stroke:#fff;stroke-width:13;stroke-linecap:round;stroke-linejoin:round}.map-route-path{fill:none;stroke:#e64b3d;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}.route-map-stops{position:absolute;inset:0;display:block}.route-map-stops li{position:absolute;transform:translate(-50%,-50%);width:max-content;max-width:145px;min-height:0!important;padding:5px 8px 5px 5px;display:flex;gap:5px;background:#fff;border:1px solid #cdd4cc;border-radius:999px;box-shadow:0 2px 6px #17221a22;z-index:2}.route-map-stops li:nth-child(even){transform:translate(-8%,-50%)}.route-map-stops li:nth-child(odd){transform:translate(-92%,-50%)}.route-map-stops li i{flex:0 0 22px;width:22px;height:22px}.route-map-stops li span{font-size:9px}.route-map-stops li small{display:none}.route-map-stops .terminal{background:#fff1ef;border-color:#f0b4ae}.route-map-stops .planet{background:#efffc7;border-color:#9bc641}.map-note{position:absolute;right:8px;bottom:6px;font-size:7px;color:#7e8980;background:#ffffffbd;padding:3px 5px;border-radius:5px}
+.scenery-front{bottom:40%;height:22%;clip-path:none;background:repeating-linear-gradient(90deg,transparent 0 14px,#51744e 14px 24px,#6fa463 24px 45px,transparent 45px 70px,#b7b2a5 70px 110px,#d4d0c3 110px 148px,transparent 148px 180px);opacity:.92}.scenery-back{bottom:46%;height:17%;background:repeating-linear-gradient(90deg,#91aa91 0 25px,transparent 25px 43px,#718c76 43px 69px,transparent 69px 98px);opacity:.65}.road:before{top:-58px;height:170%;background:repeating-linear-gradient(to bottom,#fff 0 30px,transparent 30px 76px);animation:roadMoveForward .42s linear infinite}.driver-view.stopped .scenery,.driver-view.stopped .road:before{animation-play-state:paused}
+.checkpoint{position:absolute;z-index:6;left:8%;right:8%;top:20%;height:230px;opacity:0;transform:translateY(-70px) scale(.48);transform-origin:50% 0;transition:transform .32s cubic-bezier(.15,.8,.2,1),opacity .2s;pointer-events:none}.checkpoint-pole{position:absolute;top:20px;bottom:0;width:8px;border-radius:5px;background:linear-gradient(90deg,#4d5960,#aeb8bc 50%,#4d5960);box-shadow:0 2px 5px #0005}.checkpoint-pole.left{left:7%}.checkpoint-pole.right{right:7%}.checkpoint-banner{position:absolute;left:3%;right:3%;top:0;min-height:74px;padding:9px 15px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#234d9b;border:4px solid #fff;color:#fff;border-radius:9px;box-shadow:0 7px 18px #0005;text-align:center}.checkpoint-banner:before,.checkpoint-banner:after{content:'';position:absolute;top:-7px;width:18px;height:10px;background:#d8e0e3;border-radius:2px}.checkpoint-banner:before{left:9%}.checkpoint-banner:after{right:9%}.checkpoint-banner small{font-size:8px;letter-spacing:1.4px;font-weight:900;color:#dbe7ff}.checkpoint-banner strong{font-size:25px;line-height:1.05;margin-top:2px}.checkpoint.approach{opacity:1;transform:translateY(0) scale(.82)}.checkpoint.named .checkpoint-banner{background:#159447}.checkpoint.named .checkpoint-banner strong{font-size:23px}.checkpoint.passed{opacity:0;transform:translateY(105px) scale(1.55)}
+.drive-message{top:5%;z-index:10}.checkpoint.approach~.drive-message{top:3%}.dashboard-choices{z-index:12}
+@keyframes roadMoveForward{from{background-position:0 0}to{background-position:0 -76px}}
+@media(max-height:740px){.route-map-wrap{height:365px}.checkpoint{top:18%;height:205px}.checkpoint-banner strong{font-size:21px}}
+
+/* v32: bottom-to-top route map + open road + racing gate */
+.route-map-stops .planet i{width:auto;min-width:36px;padding:0 6px;border-radius:999px;background:var(--green);font-size:7px}
+.route-map-stops .terminal i{width:auto;min-width:22px;padding:0 6px;border-radius:999px}
+.route-map-stops .planet{z-index:4;box-shadow:0 3px 10px #5f8d2438}
+
+/* 중앙 시야를 완전히 열어 실제 도로가 지평선까지 이어지게 */
+.scenery-back,.scenery-front{left:0;width:100%;animation:none!important;opacity:1;background:none;clip-path:none;pointer-events:none}
+.scenery-back{bottom:43%;height:25%}
+.scenery-front{bottom:33%;height:31%}
+.scenery-back:before,.scenery-back:after,.scenery-front:before,.scenery-front:after{content:'';position:absolute;bottom:0;background-repeat:repeat-x;animation-play-state:running}
+.scenery-back:before{left:0;width:27%;height:70%;background:repeating-linear-gradient(90deg,#b8c5bb 0 22px,#8ea79a 22px 40px,transparent 40px 54px)}
+.scenery-back:after{right:0;width:27%;height:70%;background:repeating-linear-gradient(90deg,#aab9b0 0 25px,#d1c8ba 25px 44px,transparent 44px 58px)}
+.scenery-front:before{left:0;width:24%;height:78%;background:repeating-linear-gradient(90deg,#35683f 0 10px,#65a95c 10px 34px,transparent 34px 54px,#cabda8 54px 92px,transparent 92px 112px)}
+.scenery-front:after{right:0;width:24%;height:78%;background:repeating-linear-gradient(90deg,#4e7d4d 0 12px,#76ae65 12px 36px,transparent 36px 55px,#c3b7a6 55px 98px,transparent 98px 118px)}
+.driver-view.driving .scenery-back:before,.driver-view.driving .scenery-front:before{animation:sideFlowLeft .8s linear infinite}
+.driver-view.driving .scenery-back:after,.driver-view.driving .scenery-front:after{animation:sideFlowRight .8s linear infinite}
+.driver-view.stopped .scenery-back:before,.driver-view.stopped .scenery-back:after,.driver-view.stopped .scenery-front:before,.driver-view.stopped .scenery-front:after{animation-play-state:paused}
+
+.road{left:-32%;right:-32%;bottom:-7%;height:68%;background:linear-gradient(90deg,#565d60,#444b4f 48%,#41484c 52%,#565d60);clip-path:polygon(39% 0,61% 0,100% 100%,0 100%);overflow:hidden}
+.road:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 0 22%,#e8e1b5aa 22.3% 22.8%,transparent 23% 77%,#e8e1b5aa 77.2% 77.7%,transparent 78%);clip-path:inherit;pointer-events:none}
+.road:before{left:50%;top:-15%;width:7px;height:145%;background:repeating-linear-gradient(to bottom,#fff 0 22px,transparent 22px 64px);transform:translateX(-50%) perspective(250px) rotateX(24deg);transform-origin:top;animation:roadRush .34s linear infinite}
+.road i{display:none!important}
+.windshield-frame:before{display:none!important}
+
+/* 운전석을 그림자가 아니라 실제 전경처럼 크게 */
+.dashboard{left:-7%;right:-7%;bottom:-13%;height:38%;background:linear-gradient(180deg,#394650 0,#18232c 35%,#0b1117 76%);box-shadow:0 -8px 24px #0007,inset 0 3px 0 #64727b55}
+.dashboard:before{left:28%;right:28%;top:20%;height:27%;background:linear-gradient(#202c35,#101820);border:2px solid #77858e;box-shadow:inset 0 0 18px #000b}
+.wheel{left:50%;bottom:4%;width:225px;height:225px;transform:translateX(-50%);border:19px solid #11171c;background:radial-gradient(circle at 50% 50%,#303a42 0 24%,#111820 25% 42%,transparent 43%);box-shadow:inset 0 0 0 6px #4b565e,0 -2px 14px #000b}
+.wheel:before{content:'';position:absolute;left:50%;top:50%;width:26px;height:108px;background:#242d34;transform:translate(-50%,-50%);border-radius:12px}
+.wheel:after{width:132px;height:30px;background:#252e35;border:3px solid #46515a;transform:translate(-50%,-50%);border-radius:16px}
+
+/* 레이싱 게이트: 폴은 도로 바깥, 플래카드는 도로 상단을 가로지름 */
+.checkpoint{left:1%;right:1%;top:18%;height:330px;transform:translateY(-88px) scale(.34);transform-origin:50% 8%;transition:transform .34s cubic-bezier(.16,.82,.25,1),opacity .18s}
+.checkpoint-pole{top:32px;bottom:0;width:7px;background:linear-gradient(90deg,#424b50,#c1c9cc 50%,#424b50);box-shadow:0 2px 5px #0005}
+.checkpoint-pole.left{left:2.5%}.checkpoint-pole.right{right:2.5%}
+.checkpoint-banner{left:1%;right:1%;top:0;min-height:70px;border-radius:7px}
+.checkpoint.approach{opacity:1;transform:translateY(8px) scale(.72)}
+.checkpoint.named{transform:translateY(18px) scale(.82)}
+.checkpoint.passed{opacity:0;transform:translateY(360px) scale(2.3);transition:transform .38s cubic-bezier(.3,.72,.35,1),opacity .3s .08s}
+
+@keyframes roadRush{from{background-position:0 -64px}to{background-position:0 0}}
+@keyframes sideFlowLeft{from{background-position-x:0}to{background-position-x:-112px}}
+@keyframes sideFlowRight{from{background-position-x:0}to{background-position-x:112px}}
+@media(max-height:740px){.wheel{width:190px;height:190px}.checkpoint{height:285px}.route-map-wrap{height:365px}}
+
+
+/* v40: original cockpit background + true mobile ratio + forward checkpoint pass */
+.app-shell{width:min(100%,430px);max-width:430px}
+.game-screen{height:min(100dvh,932px);min-height:min(100dvh,932px);margin:0!important;border-radius:0!important}
+@media(min-width:431px){body{padding:12px 0}.game-screen{border-radius:24px!important;overflow:hidden}.app-shell{border-radius:24px}}
+
+.driver-view{
+  position:relative;
+  flex:1;
+  min-height:0;
+  overflow:hidden;
+  isolation:isolate;
+  background-image:url('./images/driver-cockpit.png');
+  background-repeat:no-repeat;
+  background-position:center center;
+  background-size:cover;
+}
+.driver-view .sky,.driver-view .scenery,.driver-view .road,.driver-view .windshield-frame,.driver-view .dashboard{display:none!important}
+
+/* 원본 이미지는 유지하고, 도로 표면에만 아주 얇은 속도감을 더함 */
+.motion-layer{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+.motion-layer:before{content:'';position:absolute;left:22%;right:22%;top:44%;bottom:9%;opacity:0;background:
+  repeating-linear-gradient(180deg,transparent 0 20px,rgba(255,255,255,.46) 21px 24px,transparent 25px 54px);
+  clip-path:polygon(45% 0,55% 0,86% 100%,14% 100%);
+  filter:blur(.25px)}
+.motion-layer:after{content:'';position:absolute;inset:32% 0 10%;opacity:0;background:
+  linear-gradient(105deg,transparent 0 11%,rgba(255,255,255,.22) 11.5% 12%,transparent 12.5% 87.5%,rgba(255,255,255,.18) 88% 88.5%,transparent 89%);
+  filter:blur(1px)}
+.driver-view.driving .motion-layer:before{opacity:.24;animation:laneRush .33s linear infinite}
+.driver-view.driving .motion-layer:after{opacity:.38;animation:edgeRush .46s linear infinite}
+.driver-view.stopped .motion-layer:before,.driver-view.stopped .motion-layer:after{animation-play-state:paused;opacity:.05}
+.driver-view.driving{animation:cameraDrive .7s ease-in-out infinite alternate}
+.driver-view.stopped{animation:none}
+
+/* 레이스 게이트: 먼 곳에서 나타나 정차 지점까지 접근 */
+.checkpoint{z-index:6;left:5%;right:5%;top:26%;height:280px;opacity:0;transform:translateY(-70px) scale(.28);transform-origin:50% 12%;transition:transform .34s cubic-bezier(.15,.8,.2,1),opacity .18s}
+.checkpoint-pole{top:34px;bottom:0;width:6px;border-radius:4px;background:linear-gradient(90deg,#3f464b,#d5dcdf 48%,#4d555a);box-shadow:0 2px 5px #0006}
+.checkpoint-pole.left{left:2%}.checkpoint-pole.right{right:2%}
+.checkpoint-banner{left:0;right:0;top:0;min-height:62px;padding:8px 12px;border:3px solid #fff;border-radius:8px;background:#234d9b;box-shadow:0 7px 18px #0007}
+.checkpoint-banner small{font-size:7px}.checkpoint-banner strong{font-size:22px}
+.checkpoint.approach{opacity:1;transform:translateY(8px) scale(.68)}
+.checkpoint.named{transform:translateY(18px) scale(.78)}
+.checkpoint.named .checkpoint-banner{background:#159447}
+/* 정답 후 게이트 아래로 돌진하여 통과 */
+.checkpoint.passed{opacity:0;transform:translateY(430px) scale(2.65);transition:transform .42s cubic-bezier(.2,.72,.32,1),opacity .25s .12s}
+
+.drive-message{z-index:10;top:4%}
+.dashboard-choices{z-index:12;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));padding:10px;border-radius:18px}
+.choice-button{min-height:58px}
+
+@keyframes laneRush{from{background-position:0 -55px}to{background-position:0 0}}
+@keyframes edgeRush{from{transform:translateY(-10px) scale(1)}to{transform:translateY(18px) scale(1.015)}}
+@keyframes cameraDrive{from{background-size:auto 100.5%;background-position:center 50%}to{background-size:auto 102%;background-position:center 50.6%}}
+
+@media(max-width:430px){
+  .app-shell{width:100%;max-width:none;box-shadow:none}
+  .game-screen{height:100dvh;min-height:100dvh}
+  .checkpoint{top:25%;height:250px}
+  .checkpoint-banner strong{font-size:20px}
+}
+@media(max-height:760px){
+  .checkpoint{top:22%;height:220px}
+  .checkpoint.approach{transform:translateY(4px) scale(.62)}
+  .checkpoint.passed{transform:translateY(330px) scale(2.35)}
+  .choice-button{min-height:52px}
+}
+
+/* v50: floating premium checkpoint banner + clean forward motion + steering wheel motion */
+.motion-layer{display:none!important}
+
+/* 배경 자체를 아주 미세하게 확대/복귀시켜 실제 전진감만 남김 */
+.driver-view.driving{animation:cameraDriveV50 .72s ease-in-out infinite alternate}
+.driver-view.stopped{animation:none}
+@keyframes cameraDriveV50{
+  from{background-size:auto 100%;background-position:center 50%}
+  to{background-size:auto 101.6%;background-position:center 50.45%}
+}
+
+/* 폴대 없는 플로팅 플래카드 */
+.checkpoint{
+  z-index:7;
+  left:8%;right:8%;top:31%;height:auto;
+  opacity:0;
+  transform:translateY(-54px) scale(.30);
+  transform-origin:50% 50%;
+  transition:transform .36s cubic-bezier(.16,.82,.24,1),opacity .18s;
+  pointer-events:none;
+}
+.checkpoint-pole{display:none!important}
+.checkpoint-banner{
+  position:relative;left:auto;right:auto;top:auto;
+  min-height:62px;padding:9px 52px 10px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  overflow:hidden;
+  background:linear-gradient(180deg,#183f84 0%,#0d2e68 52%,#08214e 100%);
+  border:1px solid rgba(255,255,255,.85);
+  border-radius:14px;
+  color:#fff;text-align:center;
+  box-shadow:0 10px 24px #0013295c,inset 0 1px 0 rgba(255,255,255,.48),inset 0 -1px 0 rgba(0,0,0,.35);
+}
+.checkpoint-banner:before,.checkpoint-banner:after{display:none!important}
+.checkpoint-banner small{font-size:7px;letter-spacing:1.7px;font-weight:950;color:#c7ff37;margin-bottom:1px}
+.checkpoint-banner strong{font-size:22px;line-height:1.05;text-shadow:0 2px 6px #00122c}
+.banner-edge{position:absolute;top:50%;transform:translateY(-50%);font-size:7px;font-weight:950;letter-spacing:.9px;color:#bcd4ff;opacity:.74}
+.banner-edge.left{left:12px}.banner-edge.right{right:12px}
+.banner-edge:before{content:'‹‹';font-size:21px;line-height:0;display:block;color:#62c8ff;margin-bottom:4px}.banner-edge.right:before{content:'››'}
+.checkpoint.approach{opacity:1;transform:translateY(0) scale(.72)}
+.checkpoint.named{opacity:1;transform:translateY(-10px) scale(.88)}
+.checkpoint.named .checkpoint-banner{background:linear-gradient(180deg,#12764d 0%,#075d3b 55%,#06462f 100%);border-color:#caffdf}
+/* 운전자 머리 위를 지나가는 느낌: 크게 다가온 뒤 화면 위로 사라짐 */
+.checkpoint.passed{
+  opacity:0;
+  transform:translateY(-250px) scale(2.75);
+  transition:transform .46s cubic-bezier(.22,.72,.26,1),opacity .19s .27s;
+}
+
+/* 원본 운전대만 별도 투명 레이어로 올려 아주 살짝 좌우 조향 */
+.steering-motion{
+  position:absolute;z-index:8;left:50%;bottom:-1.5%;
+  width:88%;aspect-ratio:775/622;
+  background:url('./images/steering-wheel.png') center bottom/contain no-repeat;
+  transform:translateX(-50%) rotate(0deg);
+  transform-origin:50% 64%;
+  pointer-events:none;
+  filter:contrast(1.03) saturate(1.02);
+}
+.driver-view.driving .steering-motion{animation:steerV50 1.65s ease-in-out infinite alternate}
+.driver-view.stopped .steering-motion{animation-play-state:paused}
+@keyframes steerV50{
+  0%{transform:translateX(-50%) rotate(-1.15deg)}
+  50%{transform:translateX(-50%) rotate(.5deg)}
+  100%{transform:translateX(-50%) rotate(1.15deg)}
+}
+
+/* 선택 UI가 핸들보다 앞에 오도록 */
+.dashboard-choices{z-index:13}
+.drive-message,.warning-panel,.planet-pass{z-index:14}
+
+/* 결과 버튼 */
+#ad-replay-button{margin-top:10px}
+
+@media(max-width:430px){
+  .checkpoint{top:30%;left:7%;right:7%}
+  .checkpoint.approach{transform:translateY(0) scale(.68)}
+  .checkpoint.named{transform:translateY(-8px) scale(.84)}
+  .checkpoint.passed{transform:translateY(-220px) scale(2.55)}
+  .steering-motion{width:92%;bottom:-1%}
+}
+@media(max-height:760px){
+  .checkpoint{top:27%}
+  .checkpoint.passed{transform:translateY(-190px) scale(2.35)}
+  .steering-motion{width:84%;bottom:-4%}
+}
+
+/* v60: green-only race banner + moving lane dashes */
+.checkpoint-banner,
+.checkpoint.named .checkpoint-banner,
+.checkpoint.planet-gate .checkpoint-banner{
+  background:linear-gradient(180deg,#16965f 0%,#08744a 54%,#055b3a 100%)!important;
+  border-color:#d9ffe9!important;
+  box-shadow:0 12px 30px #002d2059,inset 0 1px 0 #ffffff80,inset 0 -1px 0 #003c28;
+}
+.checkpoint-banner small{color:#d9ff52!important}
+.banner-edge{color:#d8ffe8!important}.banner-edge:before{color:#91ffc1!important}
+.checkpoint.planet-gate .checkpoint-banner small:before{content:'VIA · ';}
+
+/* 원본 도로의 점선 위에만 얹는 전진 애니메이션. 가로 속도선은 사용하지 않음 */
+.motion-layer{display:block!important;position:absolute;z-index:5;inset:0;pointer-events:none;overflow:hidden;background:none!important}
+.motion-layer i{position:absolute;top:43%;height:43%;width:5px;opacity:.88;transform-origin:50% 0;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.96) 0 24px,transparent 24px 58px);filter:drop-shadow(0 1px 1px #0003);animation:laneDotsDown .48s linear infinite}
+.motion-layer i:nth-child(1){left:39%;transform:perspective(420px) rotateX(7deg) rotate(8deg) scaleY(.88)}
+.motion-layer i:nth-child(2){left:55%;transform:perspective(420px) rotateX(7deg) rotate(-1deg) scaleY(.92)}
+.motion-layer i:nth-child(3){left:70%;transform:perspective(420px) rotateX(7deg) rotate(-9deg) scaleY(.88)}
+.driver-view.stopped .motion-layer i{animation-play-state:paused}
+@keyframes laneDotsDown{from{background-position:0 -58px}to{background-position:0 0}}
+
+/* v70: animate the road from the original cockpit image itself */
+.motion-layer{display:block!important;position:absolute;inset:0;z-index:5;pointer-events:none;overflow:hidden;background:none!important}
+.motion-layer i{display:none!important}
+.motion-layer:before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:url('./images/driver-cockpit.png');
+  background-repeat:no-repeat;
+  background-position:center center;
+  background-size:cover;
+  clip-path:polygon(47% 44%,63% 44%,100% 76%,0 76%);
+  transform-origin:55% 44%;
+  opacity:.98;
+  will-change:transform,background-position;
+}
+.driver-view.driving .motion-layer:before{
+  animation:realRoadFlow .62s linear infinite;
+}
+.driver-view.stopped .motion-layer:before{
+  animation-play-state:paused;
+}
+@keyframes realRoadFlow{
+  0%{transform:scale(1.000) translateY(-1px)}
+  100%{transform:scale(1.035) translateY(10px)}
+}
+
+/* v80: stronger forward-driving feel + active steering + mirror framing */
+.driver-view{
+  /* move the cockpit composition slightly left so the left mirror sits on the outer frame */
+  background-position:46.5% center;
+}
+.driver-view.driving{
+  animation:cameraDriveV80 .42s ease-in-out infinite alternate;
+}
+@keyframes cameraDriveV80{
+  0%{background-size:auto 100.4%;background-position:46.5% 50%}
+  100%{background-size:auto 102.4%;background-position:46.5% 50.8%}
+}
+
+/* Use the actual road pixels and pull them rapidly toward the driver. */
+.motion-layer:before{
+  background-position:46.5% center;
+  clip-path:polygon(39% 38%,69% 38%,100% 77%,0 77%);
+  transform-origin:54% 39%;
+  opacity:1;
+  filter:saturate(1.02) contrast(1.02);
+}
+.driver-view.driving .motion-layer:before{
+  animation:realRoadFlowV80 .28s linear infinite;
+}
+@keyframes realRoadFlowV80{
+  0%{transform:translateY(-4px) scale(1.000)}
+  100%{transform:translateY(25px) scale(1.090)}
+}
+
+/* Steering should be visible at a glance, but still feel like lane-centering rather than swerving. */
+.driver-view.driving .steering-motion{
+  animation:steerV80 .72s ease-in-out infinite alternate;
+}
+@keyframes steerV80{
+  0%{transform:translateX(-50%) rotate(-3deg)}
+  45%{transform:translateX(-50%) rotate(.7deg)}
+  100%{transform:translateX(-50%) rotate(3deg)}
+}
+
+/* v90: clean road motion + rolling checkpoint deadline */
+/* Keep the cockpit base perfectly still so the moving road crop does not create a double-image/ghost trail. */
+.driver-view.driving{animation:none!important;background-size:cover!important;background-position:46.5% center!important}
+.motion-layer:before{
+  background-position:46.5% center!important;
+  background-size:cover!important;
+  clip-path:polygon(39% 39%,69% 39%,100% 76%,0 76%)!important;
+  opacity:1!important;
+  filter:none!important;
+  transform-origin:54% 39%!important;
+}
+.driver-view.driving .motion-layer:before{animation:realRoadFlowV90 .34s linear infinite!important}
+.driver-view.stopped .motion-layer:before{animation-play-state:paused!important}
+@keyframes realRoadFlowV90{
+  0%{transform:translateY(-2px) scale(1.000)}
+  100%{transform:translateY(18px) scale(1.060)}
+}
+
+/* The checkpoint keeps approaching while the player chooses. */
+.checkpoint.rolling{
+  opacity:1;
+  animation:checkpointRollV90 1.65s linear forwards;
+}
+.checkpoint.hold-at-windshield{
+  opacity:1;
+  animation:none!important;
+  transform:translateY(-118px) scale(1.34)!important;
+}
+.checkpoint.rolling.named{animation:none!important;transform:translateY(-24px) scale(.92)!important}
+.checkpoint.rolling.passed,.checkpoint.hold-at-windshield.passed{
+  animation:none!important;
+  opacity:0!important;
+  transform:translateY(-235px) scale(2.65)!important;
+  transition:transform .45s cubic-bezier(.18,.72,.28,1),opacity .22s .18s!important;
+}
+@keyframes checkpointRollV90{
+  0%{transform:translateY(30px) scale(.56)}
+  68%{transform:translateY(-35px) scale(.95)}
+  100%{transform:translateY(-118px) scale(1.34)}
+}
+
+/* v100: eliminate raster-road tearing. One coherent cockpit image only. */
+.motion-layer{display:none!important}
+.driver-view{background-size:cover!important;background-position:46.5% center!important}
+.driver-view.driving{animation:drivePulseV100 .62s ease-in-out infinite alternate!important}
+.driver-view.stopped{animation:none!important}
+@keyframes drivePulseV100{
+  0%{background-size:100.0% auto!important;background-position:46.5% 50%!important}
+  100%{background-size:101.2% auto!important;background-position:46.5% 50.25%!important}
+}
+/* Keep steering movement independent from the road so it remains clearly visible. */
+.driver-view.driving .steering-motion{animation:steerV100 .72s ease-in-out infinite alternate!important}
+.driver-view.stopped .steering-motion{animation-play-state:paused!important}
+@keyframes steerV100{
+  0%{transform:translateX(-50%) rotate(-3.2deg)}
+  50%{transform:translateX(-50%) rotate(.5deg)}
+  100%{transform:translateX(-50%) rotate(3.2deg)}
+}
+
+/* v130: line-only driving motion; keep the original cockpit, trees and road pixels untouched. */
+.motion-layer{
+  display:block!important;
+  position:absolute;
+  inset:0;
+  z-index:4;
+  overflow:hidden;
+  pointer-events:none;
+  background:none!important;
+}
+.motion-layer:before,.motion-layer:after{display:none!important}
+.motion-layer i{
+  display:block!important;
+  position:absolute;
+  top:48%;
+  height:29%;
+  width:5px;
+  opacity:.92;
+  border-radius:4px;
+  background:repeating-linear-gradient(to bottom,rgba(255,255,255,.94) 0 18px,transparent 18px 49px)!important;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.12));
+  transform-origin:50% 0;
+  animation:laneOnlyFlowV130 .40s linear infinite;
+}
+/* Follow the perspective of the three visible lane separators in the source photo. */
+.motion-layer i:nth-child(1){left:42.5%;transform:rotate(13deg) scaleY(1.08)}
+.motion-layer i:nth-child(2){left:55.8%;transform:rotate(-1deg) scaleY(1.02)}
+.motion-layer i:nth-child(3){left:66.0%;transform:rotate(-11deg) scaleY(1.08)}
+.driver-view.stopped .motion-layer i{animation-play-state:paused!important}
+@keyframes laneOnlyFlowV130{from{background-position:0 -49px}to{background-position:0 0}}
+
+/* Do not zoom or move the photo itself; only the lane overlay and steering wheel animate. */
+.driver-view.driving{animation:none!important;background-size:cover!important;background-position:46.5% center!important}
+
+/* Stop the banner before it visually enters the cabin/windshield. */
+.checkpoint.rolling{animation:checkpointRollV130 1.65s linear forwards!important}
+.checkpoint.hold-at-windshield{transform:translateY(-76px) scale(1.12)!important}
+.checkpoint.rolling.named{animation:none!important;transform:translateY(-30px) scale(.90)!important}
+.checkpoint.rolling.passed,.checkpoint.hold-at-windshield.passed,.checkpoint.named.passed{
+  animation:none!important;
+  opacity:0!important;
+  transform:translateY(-150px) scale(1.38)!important;
+  transition:transform .32s cubic-bezier(.18,.72,.28,1),opacity .18s .08s!important;
+}
+@keyframes checkpointRollV130{
+  0%{transform:translateY(28px) scale(.55)}
+  72%{transform:translateY(-30px) scale(.88)}
+  100%{transform:translateY(-76px) scale(1.12)}
+}
